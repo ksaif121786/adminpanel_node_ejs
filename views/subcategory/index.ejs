@@ -1,0 +1,95 @@
+<%-include('../layouts/header') %>
+<%-include('../layouts/sidebar') %>
+ <!-- Content Wrapper. Contains page content -->
+ <div class="content-wrapper">
+   <!-- Content Header (Page header) -->
+   <section class="content-header">
+     <h1>
+       Data Tables
+       <small>advanced tables</small>
+     </h1>
+     <ol class="breadcrumb">
+       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+       <li><a href="#">Tables</a></li>
+       <li class="active">Data tables</li>
+     </ol>
+   </section>
+
+   <!-- Main content -->
+   <section class="content">
+     <div class="row">
+       <div class="col-xs-12">
+         
+         <!-- /.box -->
+
+         <div class="box">
+           <div class="box-header">
+             <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
+             <a href="/admin/subcategory-add" class="btn btn-primary pull-right">Add</a>
+             <% if(messages.success) {%>
+             <div class="alert alert-success">
+               <p class="text-center"><%= messages.success%></p>
+             </div>
+             <%}%>
+           </div>
+           <!-- /.box-header -->
+           <div class="box-body">
+             <table id="example1" class="table table-bordered table-striped">
+               <thead>
+               <tr>
+                 <th>ID</th>
+                 <th>Image</th>
+                 <th>Name</th>
+                 <th>Subcategory</th>
+                 <th>Status</th>
+                 <th>Created At</th>
+                 <th>Action</th>
+               </tr>
+               </thead>
+               <tbody>
+               <% if(subcategory && subcategory.length > 0 ) {%>
+               <% for(var i=0; i < subcategory.length; i++ ) {%>
+               <tr>
+                 <td><%= i+1 %></td>
+                 <td><img src="<%baseURL%><%=subcategory[i].image%>" style="height:60px; width: 80px;"/></td>
+                 <td><%= subcategory[i].name%></td>
+                 <td><%= subcategory[i].category.name%></td>
+                 <td>
+                   <form action="" method="POST">
+                   <input type="hidden" value="<%= subcategory[i].id %>" name="subcategory_id"/>
+                   <select name="status" onchange="this.form.submit();">
+                     <option value="">Select</option>
+                     <option value="1" <%= subcategory[i].status==1? "selected":""%> >Active</option>
+                     <option value="0" <%= subcategory[i].status==0? "selected":""%> >Inactive</option>
+                   </select>
+                 </form>
+                 </td>
+                 <td><%= moment(subcategory[i].createdAt).format('Do MMMM, YYYY')%></td>
+                 <td>
+                   <a href="/admin/subcategory-edit/<%= subcategory[i].id%>" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i></a>
+                   <a href="/admin/subcategory-delete/<%= subcategory[i].id%>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure, you want to delete.')"><i class="fa fa-trash"></i></a>
+                 </td>
+               </tr>
+               <%}%>
+               <%}%>
+              
+               </tbody>
+             
+             </table>
+           </div>
+           <!-- /.box-body -->
+         </div>
+         <!-- /.box -->
+       </div>
+       <!-- /.col -->
+     </div>
+     <!-- /.row -->
+   </section>
+   <!-- /.content -->
+ </div>
+<%- include('../layouts/footer')%>
+<script>
+ $(function () {
+   $('#example1').DataTable()
+ })
+</script>

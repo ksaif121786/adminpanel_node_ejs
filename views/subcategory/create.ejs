@@ -1,0 +1,85 @@
+<%-include('../layouts/header') %>
+<%-include('../layouts/sidebar') %>
+ <!-- Content Wrapper. Contains page content -->
+ <div class="content-wrapper">
+   <!-- Content Header (Page header) -->
+   <section class="content-header">
+     <h1>
+       
+       <small></small>
+     </h1>
+     <ol class="breadcrumb">
+       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+       <li><a href="#">Tables</a></li>
+       <li class="active">Data tables</li>
+     </ol>
+   </section>
+
+   <!-- Main content -->
+   <section class="content">
+     <div class="row">
+       <div class="col-sm-6">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title"></h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" method="POST" action="" enctype="multipart/form-data">
+              <div class="box-body">
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Category</label>
+                    <select
+                    class="form-control" 
+                    id="category_id" 
+                    name="category_id"
+                    required>
+                    <option value="">select</option>
+                    <% for(var i=0; i<category.length; i++){ %>
+                    <option  value="<%=category[i].id%>"<%=typeof subcategory !='undefined' && category[i].id==subcategory.category_id ? 'selected':''%> >
+                        <%=category[i].name%>
+                    </option>
+                    <%}%>
+                    </select>
+                  </div>
+               
+                  
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Name</label>
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  id="exampleInputEmail1" 
+                  placeholder="Name" 
+                  name="name"
+                  value="<%=typeof subcategory =='undefined'? '':subcategory.name%>"
+                  required>
+                </div>
+               
+                <div class="form-group">
+                  <label for="exampleInputFile">image</label>
+                  <input type="file" id="exampleInputFile" name="image">
+                  <%if(typeof subcategory !='undefined'){%>
+                  <img src="<%=baseURL%><%=subcategory.image%>" style="height: 150px;
+                  width: 200px;"/>
+                  <%}%>
+                  <!-- <p class="help-block">Example block-level help text here.</p> -->
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary" name="submit" value="submit">Submit</button>
+              </div>
+            </form>
+          </div> 
+        
+       </div>
+       <!-- /.col -->
+     </div>
+     <!-- /.row -->
+   </section>
+   <!-- /.content -->
+ </div>
+<%- include('../layouts/footer')%>
