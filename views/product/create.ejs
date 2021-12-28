@@ -1,5 +1,15 @@
 <%-include('../layouts/header') %>
 <%-include('../layouts/sidebar') %>
+<style>
+  input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
    <!-- Content Header (Page header) -->
@@ -81,14 +91,139 @@
                 </div>
 
               </div>
+                
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group col-sm-3 custom-control-inline ">
+                    <input type="radio" class="custom-control-input variant_type" id="type" name="type" value="non_variant" checked>
+                    <label class="custom-control-label" for="customRadio2">Non Variant</label>
+                  </div>
+                  <div class="form-group col-sm-2 custom-control-inline">
+                    <input type="radio" class="custom-control-input variant_type" id="type" name="type" value="variant">
+                    <label class="custom-control-label" for="customRadio">Variant</label>
+                  </div>
+                </div>
+               
+                <!-- <div> -->
+                  <!-- <button class="btn btn-danger btn-xs">Add</button> -->
+                <!-- </div> -->
+                <div class="form-group col-sm-6 price_div">
+                  <label for="exampleInputEmail1">Price</label>
+                  <input 
+                  type="number" 
+                  class="form-control" 
+                  id="price" 
+                  placeholder="Price" 
+                  name="price"
+                  value="<%=typeof product =='undefined'? '':product.price%>"
+                  step="0.12"
+                  oninput="this.value = 
+                  !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
+                  required>
+                </div>
 
-                <div class="form-group">
+              </div>
+
+              <div class="variant_details_div">
+              <div class="row">
+               
+                <div class="form-group col-sm-6">
+                  <label for="exampleInputEmail1">Variant name</label>
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  id="variant_name" 
+                  placeholder="Variant Name" 
+                  name="variant_name"
+                  value="<%=typeof product =='undefined'? '':product.variant_name%>"
+                  required>
+                </div>
+
+
+                <div class="col-sm-6">
+
+                  <div class="form-group col-sm-3 custom-control-inline">
+                    <input type="radio" class="custom-control-input rate_type" id="rate_type" name="rate_type" value="single_rate" checked>
+                    <label class="custom-control-label" for="customRadio2">Single rate for all variants</label>
+                  </div>
+
+                  <div class="form-group col-sm-2 custom-control-inline">
+                    <input type="radio" class="custom-control-input rate_type" id="rate_type" name="rate_type" value="individual_rate">
+                    <label class="custom-control-label" for="customRadio">individual rate</label>
+                  </div>
+
+                  <div class="form-group col-sm-6">
+                   <button type="button" class="btn btn-info btn-xs pull-right add_variant">Add</button>
+                  </div>
+                 
+                 
+                </div>
+               
+              </div>
+
+              <div class="row">
+               
+                <div class="form-group col-sm-6 single_price_div">
+                  <label for="exampleInputEmail1">Price</label>
+                  <input 
+                  type="number" 
+                  class="form-control" 
+                  id="price" 
+                  placeholder="Price" 
+                  name="price"
+                  value="<%=typeof product =='undefined'? '':product.price%>"
+                  step="0.12"
+                  oninput="this.value = 
+                  !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
+                  required>
+                </div>
+
+                
+                <div class="form-group col-sm-6 variant_details_individual">
+                  <label for="exampleInputEmail1">Name</label>
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  id="name" 
+                  placeholder="Name" 
+                  name="name"
+                  value="<%=typeof product =='undefined'? '':product.name%>"
+                  required>
+                </div>
+
+
+                <div class="form-group col-sm-6 variant_details_individual">
+                  <label for="exampleInputEmail1">Price</label>
+                  <input 
+                  type="number" 
+                  class="form-control" 
+                  id="price" 
+                  placeholder="Price" 
+                  name="price"
+                  value="<%=typeof product =='undefined'? '':product.price%>"
+                  step="0.12"
+                  oninput="this.value = 
+                  !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
+                  required>
+                </div>
+
+              </div>
+
+            </div>
+
+
+
+              <!-- <div class="row"> -->
+                <!-- <div class="form-group col-sm-6">
                   <label for="exampleInputFile">Description</label>
                   <textarea class="description" id="description" placeholder="Place some text here"
                   style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                  <!-- <p class="help-block">Example block-level help text here.</p> -->
-                </div>
-              </div>
+                  <p class="help-block">Example block-level help text here.</p> -->
+                <!-- </div>  -->
+              <!-- </div> -->
+
+
+            </div>
               <!-- /.box-body -->
 
           
@@ -128,4 +263,48 @@
     
   })
   CKEDITOR.replace('description')
+</script>
+
+
+<script>
+   $('.variant_details_div').hide();
+   $('.variant_details_individual').hide();
+  $(document).ready(function(){
+     $(".variant_type").change(function(){
+     var type = $(this).val();
+     if(type=='variant'){
+        $('.price_div').hide();
+        $('.variant_details_div').show();
+      }else{
+        $('.price_div').show();
+        $('.variant_details_div').hide();
+      }
+     })
+  })
+</script>
+
+
+<script>
+  
+ $(document).ready(function(){
+    $(".rate_type").change(function(){
+     var type = $(this).val();
+     if(type=='individual_rate'){
+       $('.single_price_div').hide();
+       $('.variant_details_individual').show();
+     }else{
+       $('.single_price_div').show();
+       $('.variant_details_individual').hide();
+     }
+    })
+ })
+</script>
+
+
+<script>
+$(document).ready(function(){
+  $('.add_variant').click(function(){
+    $('.variant_details_div').append('<div class="row"> <div class="form-group col-sm-6"> <label for="exampleInputEmail1">Variant name</label> <input type="text" class="form-control" id="variant_name" placeholder="Variant Name" name="variant_name" value="" required> </div> <div class="col-sm-6"> <div class="form-group col-sm-3 custom-control-inline"> <input type="radio" class="custom-control-input rate_type" id="rate_type" name="rate_type" value="single_rate" checked> <label class="custom-control-label" for="customRadio2">Single rate for all variants</label> </div> <div class="form-group col-sm-2 custom-control-inline"> <input type="radio" class="custom-control-input rate_type" id="rate_type" name="rate_type" value="individual_rate"> <label class="custom-control-label" for="customRadio">individual rate</label> </div> <div class="form-group col-sm-6"><button type="button" class="btn btn-danger btn-xs pull-right add_variant">remove</button> </div> </div> </div> <div class="row"> <div class="form-group col-sm-6 single_price_div"> <label for="exampleInputEmail1">Price</label> <input type="number" class="form-control" id="price" placeholder="Price" name="price" value="<%=typeof product =='undefined'? '':product.price%>" step="0.12" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" required> </div> <div class="form-group col-sm-6 variant_details_individual"> <label for="exampleInputEmail1">Name</label> <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="<%=typeof product =='undefined'? '':product.name%>" required> </div> <div class="form-group col-sm-6 variant_details_individual"> <label for="exampleInputEmail1">Price</label> <input type="number" class="form-control" id="price" placeholder="Price" name="price" value="<%=typeof product =='undefined'? '':product.price%>" step="0.12" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" required> </div> </div');
+  })
+})
 </script>
